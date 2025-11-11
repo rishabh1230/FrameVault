@@ -14,7 +14,8 @@ dotenv.config(); // Load .env variables at start
 
 const app = express();
 
-const allowedOrigins = ['http://localhost:5173'];
+const productionOrigin = process.env.CORS_ORIGIN || 'http://localhost:5173';
+const allowedOrigins = [productionOrigin, 'http://localhost:5173'];
 
 // Verify secret loaded (optional, remove in production)
 console.log('Session secret loaded:', process.env.SESSION_SECRET);

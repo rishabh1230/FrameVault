@@ -3,7 +3,7 @@ import axios from "axios";
 
 
 const api = axios.create({
-  baseURL: "http://localhost:8000/api", // your backend URL
+  baseURL: import.meta.env.VITE_API_URL, // your backend URL
   withCredentials: true, // send cookies/JWTs across domains
 });
 
