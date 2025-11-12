@@ -10,33 +10,23 @@ import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 import { getPaypalClientId } from "./api/order.ts";
 
 const Root = () => {
-  const [clientId, setClientId] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
+  // ✅ Start with "sb" (sandbox) so UI loads instantly
+  const [clientId, setClientId] = useState<string>("sb");
 
   useEffect(() => {
     const fetchClientId = async () => {
       try {
         const id = await getPaypalClientId();
-        setClientId(id);
+        if (id) setClientId(id);
       } catch (error) {
-        setClientId("sb"); // fallback to sandbox
-      } finally {
-        setLoading(false);
+        console.warn("Falling back to sandbox PayPal client ID");
       }
     };
     fetchClientId();
   }, []);
 
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center min-h-screen bg-gray-900 text-white">
-        Loading Payment Gateway...
-      </div>
-    );
-  }
-
   const initialOptions = {
-    clientId: clientId || "sb",
+    clientId,
     currency: "USD",
   };
 
