@@ -161,21 +161,21 @@ const Films: React.FC = () => {
           )}
         </div>
 
-        {/* Films Grid or List */}
+        {/* ✅ Updated Films Grid or List */}
         <div className={`${
           viewMode === 'grid' 
-            ? 'grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 justify-items-center ' 
+            ? 'grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 justify-items-center' 
             : 'space-y-8'
         }`}>
           {filteredAndSortedFilms.map(film => (
-            <div key={film.id} className={viewMode === 'list' ? 'max-w-4xl mx-auto ' : ''}>
+            <div key={film.id} className={viewMode === 'list' ? 'max-w-4xl mx-auto' : ''}>
               <FilmCard film={film} />
             </div>
           ))}
         </div>
 
         {filteredAndSortedFilms.length === 0 && (
-          <div className="text-center py-20 ">
+          <div className="text-center py-20">
             <div className="mb-6">
               <Search size={64} className="mx-auto text-cinema-text-secondary opacity-50 mb-4" />
               <h3 className="text-2xl font-black text-cinema-text-primary mb-2">No Films Found</h3>
