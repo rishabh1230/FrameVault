@@ -115,41 +115,56 @@ const Header: React.FC = () => {
         )}
 
         {/* Mobile Nav Content */}
-        {isMenuOpen && (
-          <div className="md:hidden bg-cinema-card pb-4">
-            <nav className="flex flex-col space-y-2 px-4">
-              <Link
-                to="/films"
-                className={`py-2 text-sm font-bold uppercase tracking-[0.2em] hover:text-cinema-accent transition-colors ${
-                  isActive("/films") ? "text-cinema-accent" : ""
-                }`}
-              >
-                Films
-              </Link>
-              <Link
-                to="/about"
-                className={`py-2 text-sm font-bold uppercase tracking-[0.2em] hover:text-cinema-accent transition-colors ${
-                  isActive("/about") ? "text-cinema-accent" : ""
-                }`}
-              >
-                About
-              </Link>
-              <Link
-                to="/cart"
-                className={`py-2 text-sm font-bold uppercase tracking-[0.2em] hover:text-cinema-accent transition-colors flex items-center ${
-                  isActive("/cart") ? "text-cinema-accent" : ""
-                }`}
-              >
-                Cart ({itemCount})
-              </Link>
-              <button
-                onClick={handleProfileClick}
-                className="py-2 text-sm font-bold uppercase tracking-[0.2em] text-left hover:text-cinema-accent transition-colors"
-              >
-                {user ? "Profile" : "Login"}
-              </button>
-            </nav>
-          </div>
+       {isMenuOpen && (
+  <div className="md:hidden bg-cinema-card pb-4 border-t border-cinema-card">
+    <nav className="flex flex-col space-y-2 px-4">
+      <Link
+        to="/films"
+        className={`flex items-center gap-3 py-2 text-sm font-bold uppercase tracking-[0.2em] hover:text-cinema-accent transition-colors ${
+          isActive("/films") ? "text-cinema-accent" : ""
+        }`}
+      >
+        <Film size={18} />
+        Films
+      </Link>
+
+      <Link
+        to="/about"
+        className={`flex items-center gap-3 py-2 text-sm font-bold uppercase tracking-[0.2em] hover:text-cinema-accent transition-colors ${
+          isActive("/about") ? "text-cinema-accent" : ""
+        }`}
+      >
+        <Search size={18} />
+        About
+      </Link>
+
+      <Link
+        to="/cart"
+        className={`flex items-center gap-3 py-2 text-sm font-bold uppercase tracking-[0.2em] hover:text-cinema-accent transition-colors ${
+          isActive("/cart") ? "text-cinema-accent" : ""
+        }`}
+      >
+        <div className="relative">
+          <ShoppingCart size={18} />
+          {itemCount > 0 && (
+            <span className="absolute -top-2 -right-2 bg-red-600 text-white text-[10px] font-bold rounded-full h-4 w-4 flex items-center justify-center">
+              {itemCount}
+            </span>
+          )}
+        </div>
+        Cart
+      </Link>
+
+      <button
+        onClick={handleProfileClick}
+        className="flex items-center gap-3 py-2 text-sm font-bold uppercase tracking-[0.2em] text-left hover:text-cinema-accent transition-colors"
+      >
+        <User size={18} />
+        {user ? "Profile" : "Login"}
+      </button>
+    </nav>
+  </div>
+
         )}
       </div>
     </header>
