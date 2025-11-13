@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Filter, Grid2x2 as Grid, List, Search } from 'lucide-react';
+import { Filter, Search } from 'lucide-react';
 import FilmCard from '../components/FilmCard';
 import { useDynamicFilms } from '../data/films';
 
@@ -9,9 +9,7 @@ const Films: React.FC = () => {
   const [selectedCountry, setSelectedCountry] = useState<string>('all');
   const [sortBy, setSortBy] = useState<string>('year');
   const [showFilters, setShowFilters] = useState(false);
-  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
 
-  // Defensive: handle films initially null
   const genres = useMemo(() => {
     if (!films) return [];
     const allGenres = films.flatMap(film => film.genre);
@@ -61,7 +59,6 @@ const Films: React.FC = () => {
   return (
     <div className="min-h-screen bg-cinema-bg text-cinema-text-primary">
       <div className="container mx-auto px-4 py-12">
-        {/* Header */}
         <div className="mb-12">
           <div className="mb-8">
             <div className="text-cinema-accent text-sm uppercase tracking-[0.3em] font-bold mb-4 font-montserrat cinema-bg">
@@ -73,14 +70,13 @@ const Films: React.FC = () => {
             </h1>
           </div>
           <p className="text-xl text-cinema-text-secondary max-w-3xl leading-relaxed">
-            Explore our meticulously curated selection of classic and contemporary cinema,{' '}
+            Explore our meticulously curated selection of classic and contemporary cinema,
             <span className="text-xl text-cinema-text-secondary max-w-3xl leading-relaxed">
               carefully restored and presented with the highest technical standards.
             </span>
           </p>
         </div>
 
-        {/* Controls */}
         <div className="mb-12">
           <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 mb-8">
             <button
@@ -91,28 +87,11 @@ const Films: React.FC = () => {
               <span className="font-bold uppercase tracking-wide">Filters</span>
             </button>
 
-            <div className="flex items-center gap-6">
-              <div className="text-sm text-cinema-text-secondary">
-                <span className="text-cinema-text-primary font-bold">{filteredAndSortedFilms.length}</span> of {films.length} films
-              </div>
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={() => setViewMode('grid')}
-                  className={`p-2 transition-colors ${viewMode === 'grid' ? 'text-cinema-accent' : 'text-cinema-text-secondary hover:text-cinema-text-primary'}`}
-                >
-                  <Grid size={20} />
-                </button>
-                <button
-                  onClick={() => setViewMode('list')}
-                  className={`p-2 transition-colors ${viewMode === 'list' ? 'text-cinema-accent' : 'text-cinema-text-secondary hover:text-cinema-text-primary'}`}
-                >
-                  <List size={20} />
-                </button>
-              </div>
+            <div className="text-sm text-cinema-text-secondary">
+              <span className="text-cinema-text-primary font-bold">{filteredAndSortedFilms.length}</span> of {films.length} films
             </div>
           </div>
 
-          {/* Filters Panel */}
           {showFilters && (
             <div className="bg-cinema-card p-8 mb-8 border-l-4 border-cinema-accent">
               <div className="grid md:grid-cols-3 gap-6">
@@ -161,14 +140,24 @@ const Films: React.FC = () => {
           )}
         </div>
 
-        {/* ✅ Updated Films Grid or List */}
-        <div className={`${
-          viewMode === 'grid' 
-            ? 'grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 justify-items-center' 
-            : 'space-y-8'
-        }`}>
+        {/* Uniform Grid with Fixed Poster Size */}
+        <style>{`
+          .fixed-poster img {
+            width: 100% !important;
+            height: 260px !important;
+            object-fit: cover !important;
+          }
+
+          @media (min-width: 768px) {
+            .fixed-poster img {
+              height: 320px !important;
+            }
+          }
+        `}</style>
+
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 justify-items-center">
           {filteredAndSortedFilms.map(film => (
-            <div key={film.id} className={viewMode === 'list' ? 'max-w-4xl mx-auto' : ''}>
+            <div key={film.id} className="fixed-poster w-full max-w-xs">
               <FilmCard film={film} />
             </div>
           ))}
@@ -181,7 +170,7 @@ const Films: React.FC = () => {
               <h3 className="text-2xl font-black text-cinema-text-primary mb-2">No Films Found</h3>
               <p className="text-cinema-text-secondary">Try adjusting your filters to see more results.</p>
             </div>
-            <button 
+            <button
               onClick={() => {
                 setSelectedGenre('all');
                 setSelectedCountry('all');
