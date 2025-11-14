@@ -1,9 +1,45 @@
-import React from 'react';
-import { Award, Film, Users, Globe, Target, Heart, Zap } from 'lucide-react';
+import React, { useEffect } from 'react';
+import { Award, Film, Users, Globe, Target, Heart } from 'lucide-react';
 
 const About: React.FC = () => {
+
+  // 3D tilt effect
+  useEffect(() => {
+    const cards = document.querySelectorAll('.tilt-card');
+
+    cards.forEach((card) => {
+      const el = card as HTMLElement;
+
+      const handleMove = (e: MouseEvent) => {
+        const rect = el.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+
+        const rotateX = (+y / 20).toFixed(2);
+        const rotateY = (-x / 20).toFixed(2);
+
+        el.style.transform = `scale(1.1) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+      };
+
+      const reset = () => {
+        el.style.transform = "scale(1) rotateX(0deg) rotateY(0deg)";
+      };
+
+      el.addEventListener("mousemove", handleMove);
+      el.addEventListener("mouseleave", reset);
+    });
+
+    return () => {
+      cards.forEach((card) => {
+        const el = card as HTMLElement;
+        el.style.transform = "";
+      });
+    };
+  }, []);
+
   return (
     <div className="min-h-screen bg-cinema-bg text-cinema-text-primary">
+
       {/* Hero Section */}
       <section className="py-24 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-cinema-accent via-transparent to-transparent opacity-10"></div>
@@ -47,7 +83,7 @@ const About: React.FC = () => {
             </div>
             
             <div className="relative">
-              <div className="bg-cinema-accent text-white p-12 relative z-10">
+              <div className="bg-cinema-accent text-white p-12 relative z-10 tilt-card transition-transform duration-300 hover:shadow-2xl">
                 <div className="text-6xl font-black mb-4">8</div>
                 <div className="text-lg font-bold uppercase tracking-wide mb-4 font-montserrat cinema-bg">Curated Films</div>
                 <p className="text-sm leading-relaxed">
@@ -71,8 +107,9 @@ const About: React.FC = () => {
           </div>
           
           <div className="grid md:grid-cols-4 gap-8">
+            
             <div className="text-center group">
-              <div className="bg-cinema-card p-8 group-hover:bg-cinema-accent group-hover:text-white transition-all duration-300">
+              <div className="bg-cinema-card p-8 tilt-card transition-transform duration-300 hover:shadow-2xl">
                 <Film size={48} className="mx-auto mb-4" />
                 <div className="text-4xl font-black mb-2">8</div>
                 <div className="text-sm uppercase tracking-wide font-bold">Films Released</div>
@@ -80,7 +117,7 @@ const About: React.FC = () => {
             </div>
             
             <div className="text-center group">
-              <div className="bg-cinema-card p-8 group-hover:bg-cinema-accent group-hover:text-white transition-all duration-300">
+              <div className="bg-cinema-card p-8 tilt-card transition-transform duration-300 hover:shadow-2xl">
                 <Award size={48} className="mx-auto mb-4" />
                 <div className="text-4xl font-black mb-2">0</div>
                 <div className="text-sm uppercase tracking-wide font-bold">Years of Excellence</div>
@@ -88,7 +125,7 @@ const About: React.FC = () => {
             </div>
             
             <div className="text-center group">
-              <div className="bg-cinema-card p-8 group-hover:bg-cinema-accent group-hover:text-white transition-all duration-300">
+              <div className="bg-cinema-card p-8 tilt-card transition-transform duration-300 hover:shadow-2xl">
                 <Globe size={48} className="mx-auto mb-4" />
                 <div className="text-4xl font-black mb-2">24+</div>
                 <div className="text-sm uppercase tracking-wide font-bold">Languages & Regions</div>
@@ -96,12 +133,13 @@ const About: React.FC = () => {
             </div>
             
             <div className="text-center group">
-              <div className="bg-cinema-card p-8 group-hover:bg-cinema-accent group-hover:text-white transition-all duration-300">
+              <div className="bg-cinema-card p-8 tilt-card transition-transform duration-300 hover:shadow-2xl">
                 <Users size={48} className="mx-auto mb-4" />
                 <div className="text-4xl font-black mb-2">2M+</div>
                 <div className="text-sm uppercase tracking-wide font-bold">Film Enthusiasts</div>
               </div>
             </div>
+
           </div>
         </div>
       </section>
@@ -117,9 +155,10 @@ const About: React.FC = () => {
           </div>
           
           <div className="grid md:grid-cols-3 gap-8">
+            
             <div className="text-center group">
-              <div className="bg-cinema-bg p-8 border-2 border-cinema-text-secondary group-hover:border-cinema-accent transition-colors min-h-[325px]">
-                <div className="w-20 h-20 bg-cinema-accent text-white flex items-center justify-center mx-auto mb-6 group-hover:bg-cinema-text-primary group-hover:text-cinema-bg transition-colors">
+              <div className="bg-cinema-bg p-8 border-2 border-cinema-text-secondary min-h-[325px] tilt-card transition-transform duration-300 hover:shadow-2xl">
+                <div className="w-20 h-20 bg-cinema-accent text-white flex items-center justify-center mx-auto mb-6 ">
                   <Target size={36} />
                 </div>
                 <h3 className="text-2xl font-black text-cinema-text-primary mb-4 uppercase tracking-wide">Quality</h3>
@@ -131,21 +170,21 @@ const About: React.FC = () => {
             </div>
             
             <div className="text-center group">
-              <div className="bg-cinema-bg p-8 border-2 border-cinema-text-secondary group-hover:border-cinema-accent transition-colors">
-                <div className="w-20 h-20 bg-cinema-accent text-white flex items-center justify-center mx-auto mb-6 group-hover:bg-cinema-text-primary group-hover:text-cinema-bg transition-colors">
+              <div className="bg-cinema-bg p-8 border-2 border-cinema-text-secondary tilt-card transition-transform duration-300 hover:shadow-2xl">
+                <div className="w-20 h-20 bg-cinema-accent text-white flex items-center justify-center mx-auto mb-6 ">
                   <Globe size={36} />
                 </div>
                 <h3 className="text-2xl font-black text-cinema-text-primary mb-4 uppercase tracking-wide">Cultural Revival</h3>
                 <p className="text-cinema-text-secondary leading-relaxed">
-                  Great films shouldn’t be lost to time or geography. We bring India’s forgotten films, voices, and 
+                  Great films shouldn’t be lost to time or geography. We bring forgotten films, voices, and 
                   aesthetics back into the cultural conversation—reviving not just movies, but the creative eras they represent.
                 </p>
               </div>
             </div>
             
             <div className="text-center group">
-              <div className="bg-cinema-bg p-8 border-2 border-cinema-text-secondary group-hover:border-cinema-accent transition-colors">
-                <div className="w-20 h-20 bg-cinema-accent text-white flex items-center justify-center mx-auto mb-6 group-hover:bg-cinema-text-primary group-hover:text-cinema-bg transition-colors">
+              <div className="bg-cinema-bg p-8 border-2 border-cinema-text-secondary tilt-card transition-transform duration-300 hover:shadow-2xl">
+                <div className="w-20 h-20 bg-cinema-accent text-white flex items-center justify-center mx-auto mb-6">
                   <Heart size={36} />
                 </div>
                 <h3 className="text-2xl font-black text-cinema-text-primary mb-4 uppercase tracking-wide">Curation</h3>
@@ -155,32 +194,36 @@ const About: React.FC = () => {
                 </p>
               </div>
             </div>
+
           </div>
         </div>
       </section>
 
       {/* Contact CTA */}
       <section className="py-24 bg-cinema-accent text-white relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-1/3 h-full bg-cinema-bg opacity-10"></div>
-        
+        <div className="absolute inset-0 flex justify-center opacity-10 pointer-events-none">
+          <div className="w-1/2 h-full bg-cinema-bg"></div>
+        </div>
+
         <div className="container mx-auto px-4 text-center relative z-10">
-          <h2 className="text-4xl md:text-5xl font-black mb-6 leading-tight font-montserrat cinema-bg">
+          <h2 className="text-4xl md:text-5xl font-black mb-6 leading-tight font-montserrat">
             GET IN
-            <span className="block font-montserrat cinema-bg">TOUCH</span>
+            <span className="block font-montserrat">TOUCH</span>
           </h2>
-          
+
           <p className="text-xl mb-8 max-w-2xl mx-auto leading-relaxed">
-            Have questions about our collection or want to learn more about The FrameVault Collection? 
-            <span className="text-xl mb-8 max-w-2xl mx-auto leading-relaxed"> We'd love to hear from you.</span>
+            Have questions about our collection or want to learn more about The FrameVault Collection?  
+            We'd love to hear from you.
           </p>
-          
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+
+          <div className="flex justify-center">
             <button className="bg-cinema-bg text-cinema-text-primary px-8 py-4 font-bold uppercase tracking-wide hover:bg-cinema-card transition-colors">
               Contact Us
             </button>
           </div>
         </div>
       </section>
+
     </div>
   );
 };
