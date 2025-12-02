@@ -3,7 +3,7 @@ import { Award, Film, Users, Globe, Target, Heart } from 'lucide-react';
 
 const About: React.FC = () => {
 
-  // 3D tilt effect
+  // 3D Tilt Effect + Smooth Hover
   useEffect(() => {
     const cards = document.querySelectorAll('.tilt-card');
 
@@ -15,10 +15,15 @@ const About: React.FC = () => {
         const x = e.clientX - rect.left - rect.width / 2;
         const y = e.clientY - rect.top - rect.height / 2;
 
-        const rotateX = (+y / 20).toFixed(2);
-        const rotateY = (-x / 20).toFixed(2);
+        // smoother tilt + slight scale
+        const rotateX = (y / 25).toFixed(2);
+        const rotateY = (-x / 25).toFixed(2);
 
-        el.style.transform = `scale(1.1) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        el.style.transform = `
+          scale(1.07)
+          rotateX(${rotateX}deg)
+          rotateY(${rotateY}deg)
+        `;
       };
 
       const reset = () => {
@@ -39,6 +44,19 @@ const About: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-cinema-bg text-cinema-text-primary">
+
+      {/* Smooth hover + shadow utility */}
+      <style>
+        {`
+          .tilt-card {
+            transition: transform 450ms cubic-bezier(0.22, 1, 0.36, 1),
+                        box-shadow 450ms ease;
+          }
+          .tilt-card:hover {
+            box-shadow: 0 28px 45px rgba(0, 0, 0, 0.35);
+          }
+        `}
+      </style>
 
       {/* Hero Section */}
       <section className="py-24 relative overflow-hidden">
@@ -83,7 +101,7 @@ const About: React.FC = () => {
             </div>
             
             <div className="relative">
-              <div className="bg-cinema-accent text-white p-12 relative z-10 tilt-card transition-transform duration-300 hover:shadow-2xl">
+              <div className="bg-cinema-accent text-white p-12 relative z-10 tilt-card">
                 <div className="text-6xl font-black mb-4">8</div>
                 <div className="text-lg font-bold uppercase tracking-wide mb-4 font-montserrat cinema-bg">Curated Films</div>
                 <p className="text-sm leading-relaxed">
@@ -109,7 +127,7 @@ const About: React.FC = () => {
           <div className="grid md:grid-cols-4 gap-8">
             
             <div className="text-center group">
-              <div className="bg-cinema-card p-8 tilt-card transition-transform duration-300 hover:shadow-2xl">
+              <div className="bg-cinema-card p-8 tilt-card">
                 <Film size={48} className="mx-auto mb-4" />
                 <div className="text-4xl font-black mb-2">8</div>
                 <div className="text-sm uppercase tracking-wide font-bold">Films Released</div>
@@ -117,7 +135,7 @@ const About: React.FC = () => {
             </div>
             
             <div className="text-center group">
-              <div className="bg-cinema-card p-8 tilt-card transition-transform duration-300 hover:shadow-2xl">
+              <div className="bg-cinema-card p-8 tilt-card">
                 <Award size={48} className="mx-auto mb-4" />
                 <div className="text-4xl font-black mb-2">0</div>
                 <div className="text-sm uppercase tracking-wide font-bold">Years of Excellence</div>
@@ -125,7 +143,7 @@ const About: React.FC = () => {
             </div>
             
             <div className="text-center group">
-              <div className="bg-cinema-card p-8 tilt-card transition-transform duration-300 hover:shadow-2xl">
+              <div className="bg-cinema-card p-8 tilt-card">
                 <Globe size={48} className="mx-auto mb-4" />
                 <div className="text-4xl font-black mb-2">24+</div>
                 <div className="text-sm uppercase tracking-wide font-bold">Languages & Regions</div>
@@ -133,7 +151,7 @@ const About: React.FC = () => {
             </div>
             
             <div className="text-center group">
-              <div className="bg-cinema-card p-8 tilt-card transition-transform duration-300 hover:shadow-2xl">
+              <div className="bg-cinema-card p-8 tilt-card">
                 <Users size={48} className="mx-auto mb-4" />
                 <div className="text-4xl font-black mb-2">2M+</div>
                 <div className="text-sm uppercase tracking-wide font-bold">Film Enthusiasts</div>
@@ -157,7 +175,7 @@ const About: React.FC = () => {
           <div className="grid md:grid-cols-3 gap-8">
             
             <div className="text-center group">
-              <div className="bg-cinema-bg p-8 border-2 border-cinema-text-secondary min-h-[325px] tilt-card transition-transform duration-300 hover:shadow-2xl">
+              <div className="bg-cinema-bg p-8 border-2 border-cinema-text-secondary min-h-[325px] tilt-card">
                 <div className="w-20 h-20 bg-cinema-accent text-white flex items-center justify-center mx-auto mb-6 ">
                   <Target size={36} />
                 </div>
@@ -170,7 +188,7 @@ const About: React.FC = () => {
             </div>
             
             <div className="text-center group">
-              <div className="bg-cinema-bg p-8 border-2 border-cinema-text-secondary tilt-card transition-transform duration-300 hover:shadow-2xl">
+              <div className="bg-cinema-bg p-8 border-2 border-cinema-text-secondary tilt-card">
                 <div className="w-20 h-20 bg-cinema-accent text-white flex items-center justify-center mx-auto mb-6 ">
                   <Globe size={36} />
                 </div>
@@ -183,7 +201,7 @@ const About: React.FC = () => {
             </div>
             
             <div className="text-center group">
-              <div className="bg-cinema-bg p-8 border-2 border-cinema-text-secondary tilt-card transition-transform duration-300 hover:shadow-2xl">
+              <div className="bg-cinema-bg p-8 border-2 border-cinema-text-secondary tilt-card">
                 <div className="w-20 h-20 bg-cinema-accent text-white flex items-center justify-center mx-auto mb-6">
                   <Heart size={36} />
                 </div>

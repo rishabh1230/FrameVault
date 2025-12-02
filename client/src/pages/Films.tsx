@@ -69,6 +69,7 @@ const Films: React.FC = () => {
               <span className="block text-cinema-accent font-montserrat cinema-bg">CINEMA</span>
             </h1>
           </div>
+
           <p className="text-xl text-cinema-text-secondary max-w-3xl leading-relaxed">
             Explore our meticulously curated selection of classic and contemporary cinema,
             <span className="text-xl text-cinema-text-secondary max-w-3xl leading-relaxed">
@@ -114,7 +115,7 @@ const Films: React.FC = () => {
                   <select
                     value={selectedCountry}
                     onChange={(e) => setSelectedCountry(e.target.value)}
-                    className="w-full bg-cinema-bg text-cinema-text-primary border-2 border-cinema-text-secondary px-4 py-3 focus:outline-none focus:border-cinema-accent transition-colors font-medium "
+                    className="w-full bg-cinema-bg text-cinema-text-primary border-2 border-cinema-text-secondary px-4 py-3 focus:outline-none focus:border-cinema-accent transition-colors font-medium"
                   >
                     <option value="all">All Countries</option>
                     {countries.map(country => (
@@ -140,7 +141,7 @@ const Films: React.FC = () => {
           )}
         </div>
 
-        {/* Uniform Grid with Fixed Poster Size */}
+        {/* Poster Size Fix */}
         <style>{`
           .fixed-poster img {
             width: 100% !important;
@@ -155,9 +156,26 @@ const Films: React.FC = () => {
           }
         `}</style>
 
+        {/* FILM CARDS */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 justify-items-center">
           {filteredAndSortedFilms.map(film => (
-            <div key={film.id} className="fixed-poster w-full max-w-xs">
+            <div
+              key={film.id}
+              className="
+                fixed-poster w-full max-w-xs
+                rounded-md
+                shadow-md
+                px-4 pt-4 pb-6
+
+                bg-cinema-bg
+
+                transform transition-all duration-300 ease-out
+
+                hover:-translate-y-2
+                hover:bg-cinema-bg/10
+                hover:shadow-[0_8px_30px_rgba(0,0,0,0.35)]
+              "
+            >
               <FilmCard film={film} />
             </div>
           ))}
@@ -170,6 +188,7 @@ const Films: React.FC = () => {
               <h3 className="text-2xl font-black text-cinema-text-primary mb-2">No Films Found</h3>
               <p className="text-cinema-text-secondary">Try adjusting your filters to see more results.</p>
             </div>
+
             <button
               onClick={() => {
                 setSelectedGenre('all');

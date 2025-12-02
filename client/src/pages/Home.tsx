@@ -10,6 +10,22 @@ const Home: React.FC = () => {
 
   return (
     <div className="bg-cinema-bg text-cinema-text-primary">
+
+      {/* Same poster size style as Films.tsx */}
+      <style>{`
+        .fixed-poster img {
+          width: 100% !important;
+          height: 260px !important;
+          object-fit: cover !important;
+        }
+
+        @media (min-width: 768px) {
+          .fixed-poster img {
+            height: 320px !important;
+          }
+        }
+      `}</style>
+
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center overflow-hidden">
         <div
@@ -20,10 +36,7 @@ const Home: React.FC = () => {
         />
 
         {/* Geometric overlay */}
-        <div className="absolute inset-0">
-          <div className="absolute top-20 right-20 w-96 h-96 border-2 border-cinema-accent rotate-45 opacity-20"></div>
-          <div className="absolute bottom-32 left-16 w-64 h-64 bg-cinema-accent opacity-10 rotate-12"></div>
-        </div>
+        
 
         <div className="relative container mx-auto px-4 z-10">
           <div className="max-w-6xl">
@@ -65,7 +78,7 @@ const Home: React.FC = () => {
       </section>
 
       {/* Featured Films */}
-      <section className="py-24 bg-cinema-card">
+      <section className="py-24 bg-cinema-bg">
         <div className="container mx-auto px-4">
           <div className="mb-16">
             <div className="flex items-center justify-between">
@@ -90,20 +103,28 @@ const Home: React.FC = () => {
             </div>
           </div>
 
-          {/* 🔥 Horizontal Scrollable Featured Films */}
+          {/* Updated with Films.tsx hover effect */}
           <div className="overflow-x-auto scrollbar-hide">
             <div className="flex gap-8 snap-x snap-mandatory px-1">
               {featuredFilms.map((film) => (
                 <div
                   key={film.id}
-                  className="group flex-shrink-0 w-72 snap-center transition-transform hover:scale-105 duration-300"
+                  className="
+                    fixed-poster
+                    w-72 flex-shrink-0 snap-center
+                    rounded-md shadow-md
+                    px-4 pt-4 pb-6
+                    bg-cinema-bg
+
+                    transform transition-all duration-300 ease-out
+
+                    hover:-translate-y-2
+                    hover:bg-cinema-bg/10
+                    hover:shadow-[0_8px_30px_rgba(0,0,0,0.35)]
+                  "
                 >
                   <div className="relative overflow-hidden mb-4">
-                    <div className="absolute top-4 left-4 z-10">
-                      <div className="bg-cinema-accent text-white px-3 py-1 text-xs font-bold uppercase tracking-wide">
-                        #KK{film.criterionNumber}
-                      </div>
-                    </div>
+
                     <FilmCard film={film} />
                   </div>
                 </div>
